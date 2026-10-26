@@ -1,0 +1,4 @@
+@extends('layouts.app')
+@section('title','Activity log')
+@section('subtitle','An accountable history of changes across your workspace.')
+@section('content')<section class="panel"><div class="table-wrap"><table><thead><tr><th>Time</th><th>Team member</th><th>Action</th><th>Record</th><th>IP address</th><th>Details</th></tr></thead><tbody>@forelse($logs as $log)<tr><td>{{$log->created_at}}</td><td>{{$log->user??'System'}}</td><td>{{str_replace('_',' ',$log->action)}}</td><td>{{$log->entity}} {{$log->entity_id?'#'.$log->entity_id:''}}</td><td>{{$log->ip}}</td><td><code>{{$log->metadata}}</code></td></tr>@empty<tr><td colspan="6"><x-empty title="No activity yet" text="Workspace changes will appear here."/></td></tr>@endforelse</tbody></table></div><div class="pagination">{{$logs->links('components.pagination')}}</div></section>@endsection
